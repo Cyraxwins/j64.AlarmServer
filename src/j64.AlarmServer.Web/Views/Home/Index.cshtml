@@ -110,7 +110,7 @@
             </div>
         }
     </div>
-    @if (await AuthorizationService.AuthorizeAsync(User, null, "ArmDisarm"))
+    @if (await AuthorizationService.AuthorizeAsync(User, null, "ArmDisarm")!= null)
     {
         <div class="col-md-6">
             <div class="panel panel-default">

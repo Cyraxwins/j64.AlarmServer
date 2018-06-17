@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,10 +10,10 @@ using j64.AlarmServer.Web.Data;
 using j64.AlarmServer.Web.Models;
 using j64.AlarmServer.Web.Services;
 using j64.AlarmServer.Web.Repository;
-using Microsoft.AspNet.Builder;
-using Moon.AspNet.Authentication.Basic;
+using Moon.AspNetCore.Authentication.Basic;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 
 namespace j64.AlarmServer.Web
 {
@@ -45,9 +42,12 @@ namespace j64.AlarmServer.Web
 
         public IConfigurationRoot Configuration { get; }
 
+        public static UserManager<ApplicationUser> UserManager { get; set; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             var s = services.FirstOrDefault(x => x.ServiceType == typeof(IHostingEnvironment));
             var env = s.ImplementationInstance as IHostingEnvironment;
 
@@ -59,12 +59,24 @@ namespace j64.AlarmServer.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddAuthentication()
+                .AddBasic(o =>
+                {
+                    o.Realm = $"j64 Alarm";
+
+                    o.Events = new BasicAuthenticationEvents
+                    {
+                        OnSignIn = OnSignIn
+                    };
+                });
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("ArmDisarm", policy => policy.RequireClaim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "ArmDisarm"));
             });
 
-            services.AddMvc();
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -79,7 +91,7 @@ namespace j64.AlarmServer.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, UserManager<ApplicationUser> userManager, ApplicationDbContext ctx)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, UserManager<ApplicationUser> uManager, ApplicationDbContext ctx)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -95,41 +107,11 @@ namespace j64.AlarmServer.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            UserManager = uManager;
+
             app.UseStaticFiles();
 
-            app.UseIdentity();
-
-            // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
-            // Refactor this into a seperate class
-            // Remove hard coding of the password in the installDevices routine!
-            app.UseBasicAuthentication(o =>
-            {
-                o.Realm = $"j64 Alarm";
-
-                o.Events = new BasicAuthenticationEvents
-                {
-                    OnSignIn = c =>
-                    {
-                        var x = userManager.FindByNameAsync(c.UserName);
-                        x.Wait();
-                        if (x.Result != null)
-                        {
-                            var y = userManager.CheckPasswordAsync(x.Result, c.Password);
-                            y.Wait();
-
-                            if (y.Result == true)
-                            {
-                                var z = userManager.GetClaimsAsync(x.Result);
-                                z.Wait();
-                                var identity = new ClaimsIdentity(z.Result, c.Options.AuthenticationScheme);
-                                c.Principal = new ClaimsPrincipal(identity);
-                            }
-                        }
-
-                        return Task.FromResult(true);
-                    }
-                };
-            });
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
@@ -140,7 +122,32 @@ namespace j64.AlarmServer.Web
 
 
             // Seed some default entries into the database
-            var task = new Data.UserDataInitializer(ctx, userManager).CreateMasterUser();
+            var task = new UserDataInitializer(ctx, UserManager).CreateMasterUser();
+        }
+
+        // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
+        // Refactor this into a seperate class
+        // Remove hard coding of the password in the installDevices routine!
+        private Task OnSignIn(BasicSignInContext context)
+        {
+            var x = UserManager.FindByNameAsync(context.UserName);
+            x.Wait();
+            if (x.Result != null)
+            {
+                var y = UserManager.CheckPasswordAsync(x.Result, context.Password);
+                y.Wait();
+
+                if (y.Result == true)
+                {
+                    var z = UserManager.GetClaimsAsync(x.Result);
+                    z.Wait();
+                    var identity = new ClaimsIdentity(z.Result, context.Scheme.Name);
+                    context.Principal = new ClaimsPrincipal(identity);
+                }
+            }
+
+            return Task.FromResult(true);
+
         }
     }
 }

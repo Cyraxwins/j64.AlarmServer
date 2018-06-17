@@ -6,7 +6,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "j64.Alarmserver.Web", "j64.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "j64.Alarmserver", "j64.AlarmServer\j64.Alarmserver.csproj", "{F214E46D-ECC2-429D-8ECC-96233E5E4B36}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moon.AspNet.Authentication.Basic", "Moon.Aspnet.Authentication.Basic\Moon.AspNet.Authentication.Basic.csproj", "{8A27AE94-A567-48D0-BA0E-6BA201CF530F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moon.AspNetCore.Authentication.Basic", "Moon.AspNetCore.Authentication.Basic\Moon.AspNetCore.Authentication.Basic.csproj", "{D3A4665D-666E-4838-BA6A-240FD5E312CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,20 +42,23 @@ Global
 		{F214E46D-ECC2-429D-8ECC-96233E5E4B36}.Release|x64.Build.0 = Release|Any CPU
 		{F214E46D-ECC2-429D-8ECC-96233E5E4B36}.Release|x86.ActiveCfg = Release|Any CPU
 		{F214E46D-ECC2-429D-8ECC-96233E5E4B36}.Release|x86.Build.0 = Release|Any CPU
-		{8A27AE94-A567-48D0-BA0E-6BA201CF530F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A27AE94-A567-48D0-BA0E-6BA201CF530F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A27AE94-A567-48D0-BA0E-6BA201CF530F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8A27AE94-A567-48D0-BA0E-6BA201CF530F}.Debug|x64.Build.0 = Debug|Any CPU
-		{8A27AE94-A567-48D0-BA0E-6BA201CF530F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8A27AE94-A567-48D0-BA0E-6BA201CF530F}.Debug|x86.Build.0 = Debug|Any CPU
-		{8A27AE94-A567-48D0-BA0E-6BA201CF530F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A27AE94-A567-48D0-BA0E-6BA201CF530F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A27AE94-A567-48D0-BA0E-6BA201CF530F}.Release|x64.ActiveCfg = Release|Any CPU
-		{8A27AE94-A567-48D0-BA0E-6BA201CF530F}.Release|x64.Build.0 = Release|Any CPU
-		{8A27AE94-A567-48D0-BA0E-6BA201CF530F}.Release|x86.ActiveCfg = Release|Any CPU
-		{8A27AE94-A567-48D0-BA0E-6BA201CF530F}.Release|x86.Build.0 = Release|Any CPU
+		{D3A4665D-666E-4838-BA6A-240FD5E312CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A4665D-666E-4838-BA6A-240FD5E312CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3A4665D-666E-4838-BA6A-240FD5E312CE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D3A4665D-666E-4838-BA6A-240FD5E312CE}.Debug|x64.Build.0 = Debug|Any CPU
+		{D3A4665D-666E-4838-BA6A-240FD5E312CE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D3A4665D-666E-4838-BA6A-240FD5E312CE}.Debug|x86.Build.0 = Debug|Any CPU
+		{D3A4665D-666E-4838-BA6A-240FD5E312CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3A4665D-666E-4838-BA6A-240FD5E312CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3A4665D-666E-4838-BA6A-240FD5E312CE}.Release|x64.ActiveCfg = Release|Any CPU
+		{D3A4665D-666E-4838-BA6A-240FD5E312CE}.Release|x64.Build.0 = Release|Any CPU
+		{D3A4665D-666E-4838-BA6A-240FD5E312CE}.Release|x86.ActiveCfg = Release|Any CPU
+		{D3A4665D-666E-4838-BA6A-240FD5E312CE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1C65BFB7-4FAA-4D73-8F02-6159003BC914}
 	EndGlobalSection
 EndGlobal
