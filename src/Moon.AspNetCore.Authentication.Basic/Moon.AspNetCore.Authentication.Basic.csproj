@@ -2,16 +2,12 @@
   <Import Project="Common.props" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RuntimeIdentifiers>win8-arm;ubuntu.14.04-arm;ubuntu.16.04-arm</RuntimeIdentifiers>
     <Description>ASP.NET Core middleware that enables an application to use Basic authentication.</Description>
     <PackageTags>moon;aspnet;core;authentication;basic</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <!--<PackageReference Include="Moon.Contracts" Version="3.1.0" />-->
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.Extensions.Identity.Core">
-      <HintPath>..\..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.identity.core\2.1.0\lib\netstandard2.0\Microsoft.Extensions.Identity.Core.dll</HintPath>
-    </Reference>
   </ItemGroup>
 </Project>
