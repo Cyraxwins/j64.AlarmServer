@@ -6,12 +6,6 @@
     <StartupObject></StartupObject>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="wwwroot\hosting.json">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.8.4" />
